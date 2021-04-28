@@ -108,6 +108,7 @@ while (True):
         # print(loc_0[1,:])
         kdt = KDTree(loc, leaf_size=30, metric='euclidean')
         dist, ind = kdt.query(recent_loc, k=1)
+        # kd tree matched points that are too far away are ignored
         thd = (dist < 14)*1
         thd_nz = np.where(thd)[0]
         # update point if close enough point are detected
@@ -116,8 +117,9 @@ while (True):
         # visualize the displacement field
         loc_v = 2*recent_loc - loc_0  # diff vector
 
+        # decompose vector field
         # field = nHHD()
-        # field.decompose(loc_v)
+        # field.decompose(loc_v)  
         
         print(int(1.0/(time.time()- t1)))
         t1 = time.time()
