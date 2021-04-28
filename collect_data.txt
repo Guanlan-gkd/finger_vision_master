@@ -1,0 +1,24 @@
+Following are steps to collect dataset from pie camera.
+
+1. Connect raspberrry pi to laptop via ethnet
+2. $ sudo sh scripts/setup_connection.sh
+3. $ ssh ubuntu@192.168.1.104
+   enter password for login to raspberrry pi
+
+### start another terminal session
+4. $ roscore
+
+### following steps are on ssh session on raspberry pi
+5. $ cd yipai_catkin
+6. $ source devel/setup.bash
+7. $ roslaunch raspicam_node fv_camera.launch
+
+
+### start another terminal session on the host machine
+(optional step to view images in rviz) $ rviz 
+8. $ cd ~/catkin_ws
+9. $ source devel/setup.bash
+10. make sure the paths in finger-vision/src/image_saver.py line 18 and line 23 exist
+11. $ rosrun fv_raspi image_saver.py
+(recording starts immediately in imgs/ folder, one press on right arrow saves one images in imgs_times/ folder)
+12. to stop recording, press Esc
