@@ -58,8 +58,8 @@ class nHHD(object):
         if (self.dim != 2) and (self.dim != 3):
             raise ValueError("nHHD Solver works only for 2 and 3 dimensions")
 
-        self.psolver.prepare(True)
-
+        self.psolver.prepare(True)     
+    
     # create the 3-component decomposition
     def decompose(self, vfield, verbose=0):
 
@@ -67,70 +67,70 @@ class nHHD(object):
             raise ValueError("nHHD.decompose requires a valid-dimensional vector field")
 
         if verbose > 0:
-            print '\n ==> nhhd.decompose', vfield.shape
-
+            print( '\n ==> nhhd.decompose', vfield.shape)
+        
         if self.dim == 2:
 
             # compute div curl
             (self.div, self.curlw) = self.mesh.divcurl(vfield)
 
             if verbose > 0:
-                print 'div =', self.div.shape, self.div.min(), self.div.max()
-                print 'curlw =', self.curlw.shape, self.curlw.min(), self.curlw.max()
+                print( 'div =', self.div.shape, self.div.min(), self.div.max())
+                print( 'curlw =', self.curlw.shape, self.curlw.min(), self.curlw.max())
 
             # compute potentials
             self.nD = self.psolver.solve(self.div, verbose > 0) #1)
             if verbose > 0:
-                print 'nD =', self.nD.shape, self.nD.min(), self.nD.max()
+                print( 'nD =', self.nD.shape, self.nD.min(), self.nD.max())
 
             self.nRu = self.psolver.solve(self.curlw, verbose > 0) #1)
             if verbose > 0:
-                print 'nR =', self.nRu.shape, self.nRu.min(), self.nRu.max()
+                print( 'nR =', self.nRu.shape, self.nRu.min(), self.nRu.max())
 
             # compute fields as gradients of potentials
             self.d = self.mesh.gradient(self.nD)
             if verbose > 0:
-                print 'd =', self.d.shape, self.d.min(), self.d.max()
+                print( 'd =', self.d.shape, self.d.min(), self.d.max())
 
             self.r = self.mesh.rotated_gradient(self.nRu)
             if verbose > 0:
-                print 'r =', self.r.shape, self.r.min(), self.r.max()
+                print( 'r =', self.r.shape, self.r.min(), self.r.max())
         else:
 
             # compute div curl
             (self.div, self.curlu, self.curlv, self.curlw) = self.mesh.divcurl(vfield)
 
             if verbose > 0:
-                print 'div =', self.div.shape, self.div.min(), self.div.max()
-                print 'curlu =', self.curlu.shape, self.curlu.min(), self.curlu.max()
-                print 'curlv =', self.curlv.shape, self.curlv.min(), self.curlv.max()
-                print 'curlw =', self.curlw.shape, self.curlw.min(), self.curlw.max()
+                print( 'div =', self.div.shape, self.div.min(), self.div.max())
+                print( 'curlu =', self.curlu.shape, self.curlu.min(), self.curlu.max())
+                print( 'curlv =', self.curlv.shape, self.curlv.min(), self.curlv.max())
+                print( 'curlw =', self.curlw.shape, self.curlw.min(), self.curlw.max())
 
             # compute potentials
             self.nD = self.psolver.solve(self.div, verbose > 0) #1)
             if verbose > 0:
-                print 'nD =', self.nD.shape, self.nD.min(), self.nD.max()
+                print( 'nD =', self.nD.shape, self.nD.min(), self.nD.max())
 
             self.nRu = self.psolver.solve(self.curlu, verbose > 0)
             self.nRu *= -1.0
             if verbose > 0:
-                print 'nRu =', self.nRu.shape, self.nRu.min(), self.nRu.max()
+                print( 'nRu =', self.nRu.shape, self.nRu.min(), self.nRu.max())
 
             self.nRv = self.psolver.solve(self.curlv, verbose > 0)
             self.nRv *= -1.0
             if verbose > 0:
-                print 'nRv =', self.nRv.shape, self.nRv.min(), self.nRv.max()
+                print( 'nRv =', self.nRv.shape, self.nRv.min(), self.nRv.max())
 
             self.nRw = self.psolver.solve(self.curlw, verbose > 0)
             self.nRw *= -1.0
 
             if verbose > 0:
-                print 'nRw =', self.nRw.shape, self.nRw.min(), self.nRw.max()
+                print( 'nRw =', self.nRw.shape, self.nRw.min(), self.nRw.max())
 
             # compute divergent field as gradient of D potential
             self.d = self.mesh.gradient(self.nD)
             if verbose > 0:
-                print 'd =', self.d.shape, self.d.min(), self.d.max()
+                print( 'd =', self.d.shape, self.d.min(), self.d.max())
 
             # temporary use of r
             self.r = numpy.stack((self.nRu, self.nRv, self.nRw), axis = -1)
@@ -139,12 +139,39 @@ class nHHD(object):
             (cu, cv, cw) = self.mesh.curl3D(self.r)
             self.r = numpy.stack((cu, cv, cw), axis = -1)
             if verbose > 0:
-                print 'r =', self.r.shape, self.r.min(), self.r.max()
+                print( 'r =', self.r.shape, self.r.min(), self.r.max())
 
         self.h = numpy.add(self.d, self.r)
         numpy.subtract(vfield, self.h, self.h)
 
         if verbose > 0:
-            print 'h =', self.h.shape, self.h.min(), self.h.max()
+            print( 'h =', self.h.shape, self.h.min(), self.h.max())
+        
+    def get_force(self, vfield, verbose): 
+        
+        mgrid = numpy.mgrid[0: vfield.shape[0], 0: vfield.shape[1]]
+        grid = numpy.zeros()
+        
+        
+        
+        self.decompose(vfield, verbose)
+        
+        self.Sn = numpy.sum(numpy.absolute(self.d))
+        print("Sn is:", self.Sn)
+        
+        self.St = abs(numpy.sum(self.h))
+        print("St is:", self.St)
+        
+        nR_max_loc = numpy.unravel_index(numpy.argmax(self.nRu, axis = None), self.nRu.shape)
+        nR_min_loc = numpy.unravel_index(numpy.argmin(self.nRu, axis = None), self.nRu.shape)
+        
+        print(nR_max_loc)
+        
+        r_p = self.mgrid - nR_max_loc 
+        r_n = self.mgrid - nR_min_loc
+        
+        # self.Stor = numpy.sum(numpy.multiply(r_p, self.r)) + numpy.sum(numpy.multiply(r_n, self.r))
+        # print("Stor is:", self.Stor)
+
         
 # ---------------------------------------------------------------------------
