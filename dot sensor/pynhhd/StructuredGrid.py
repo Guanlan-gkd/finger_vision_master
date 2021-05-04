@@ -59,10 +59,10 @@ class StructuredGrid(object):
             raise ValueError("Dimensions of spacings should match that of the grid")
 
         if verbose > 0:
-            print '     Initializing', self.dim, 'D structured grid...',
+            print('     Initializing', self.dim, 'D structured grid...', end ='')
             sys.stdout.flush()
             mtimer = Timer()
-            print ' Done!',
+            print(' Done!', end ='')
             mtimer.end()
 
     # --------------------------------------------------------------------------
@@ -74,7 +74,7 @@ class StructuredGrid(object):
             raise ValueError("Dimensions of vector field should match that of the grid")
 
         if verbose:
-            print '     Computing div and curl...',
+            print('     Computing div and curl...', end ='')
             sys.stdout.flush()
             mtimer = Timer()
 
@@ -88,7 +88,7 @@ class StructuredGrid(object):
             numpy.subtract(dvdx, dudy, dvdx)
 
             if verbose:
-                print ' Done!',
+                print(' Done!', end ='')
                 mtimer.end()
 
             return (dudx, dvdx)
@@ -108,7 +108,7 @@ class StructuredGrid(object):
             numpy.subtract(dvdx, dudy, dvdx)
 
             if verbose:
-                print ' Done!',
+                print(' Done!', end ='')
                 mtimer.end()
 
             return (dudx, dwdy, dudz, dvdx)
@@ -123,7 +123,7 @@ class StructuredGrid(object):
             raise ValueError("curl3D works only for 2D")
 
         if verbose:
-            print '     Computing curl...',
+            print('     Computing curl...', end ='')
             sys.stdout.flush()
             mtimer = Timer()
 
@@ -137,7 +137,7 @@ class StructuredGrid(object):
         numpy.subtract(dvdx, dudy, dvdx)
 
         if verbose:
-            print ' Done!',
+            print(' Done!', end ='')
             mtimer.end()
 
         return (dwdy, dudz, dvdx)
@@ -152,7 +152,7 @@ class StructuredGrid(object):
             raise ValueError("rotated_gradient works only for 2D")
 
         if verbose:
-            print '     Computing rotated gradient...',
+            print('     Computing rotated gradient...', end ='')
             sys.stdout.flush()
             mtimer = Timer()
 
@@ -162,7 +162,7 @@ class StructuredGrid(object):
         grad = numpy.stack((ddy, ddx), axis=-1)
 
         if verbose:
-            print ' Done!',
+            print(' Done!', end ='')
             mtimer.end()
 
         return grad
@@ -174,7 +174,7 @@ class StructuredGrid(object):
             raise ValueError("Dimensions of scalar field should match that of the grid")
 
         if verbose:
-            print '     Computing gradient...',
+            print('     Computing gradient...', end ='')
             sys.stdout.flush()
             mtimer = Timer()
 
@@ -191,7 +191,7 @@ class StructuredGrid(object):
             grad = numpy.stack((ddx, ddy, ddz), axis = -1)
 
         if verbose:
-            print ' Done!',
+            print(' Done!', end ='')
             mtimer.end()
 
         return grad

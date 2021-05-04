@@ -121,9 +121,9 @@ class PoissonSolver(object):
 
         self.ready = False
         if (self.ptype == 'G'):
-            print 'PoissonSolver:', self.dim, 'D grid =', self.gdims, 'with spacings', self.gdx
+            print( 'PoissonSolver:', self.dim, 'D grid =', self.gdims, 'with spacings', self.gdx)
         elif (self.ptype == 'P'):
-            print 'PoissonSolver', self.dim, 'D points =', self.points.shape
+            print( 'PoissonSolver', self.dim, 'D points =', self.points.shape)
 
     # --------------------------------------------------------------------------
     # create the Green's function in appropriate representation
@@ -135,12 +135,12 @@ class PoissonSolver(object):
 
         mtimer = Timer()
         if verbose:
-            print '  - creating distance kernel:',
+            print( '  - creating distance kernel:', end ='')
 
         rdims = tuple(2*d - 1 for d in self.gdims)
 
         R = numpy.indices(rdims, dtype=self.dtype)
-        for d in xrange(self.dim):
+        for d in range(self.dim):
             R[d] += 1-self.gdims[d]
             R[d] *= self.gdx[d]
 
@@ -166,7 +166,7 @@ class PoissonSolver(object):
             R[self.gdims[0]-1, self.gdims[1]-1, self.gdims[2]-1] = zval
 
         if verbose:
-            print R.shape, R.min(), R.max(),
+            print( R.shape, R.min(), R.max())
             mtimer.end()
 
         return R
@@ -206,7 +206,7 @@ class PoissonSolver(object):
         # ----------------------------------------------------------------------
         gtimer = Timer()
         if verbose:
-            print '\nInitializing Poisson solver, type =', self.stype
+            print( '\nInitializing Poisson solver, type =', self.stype)
 
         # ----------------------------------------------------------------------
         # generate a grid to store pairwise distances to store Green's function
@@ -247,14 +247,14 @@ class PoissonSolver(object):
                 self.G += zval * numpy.identity(self.G.shape[0])
 
                 if verbose:
-                    print '  - created pairwise distance matrix:', self.G.shape, self.G.min(), self.G.max(),
+                    print('  - created pairwise distance matrix:', self.G.shape, self.G.min(), self.G.max(), end = "")
                     ltimer.end()
 
         # ----------------------------------------------------------------------
         # compute the Green's function
         ltimer = Timer()
         if verbose:
-            print '  - computing the Green\'s function:',
+            print( '  - computing the Green\'s function:')
 
         if self.dim == 1:
             numpy.multiply(self.G, 0.5, self.G)
@@ -268,14 +268,14 @@ class PoissonSolver(object):
             numpy.multiply(self.G, (-0.25 / numpy.pi), self.G)
 
         if verbose:
-            print self.G.shape, self.G.min(), self.G.max(),
+            print( self.G.shape, self.G.min(), self.G.max(), end = "")
             ltimer.end()
 
         # ----------------------------------------------------------------------
         self.ready = True
 
         if verbose:
-            print 'Poisson solver initialized',
+            print( 'Poisson solver initialized', end ='')
             gtimer.end()
 
     # --------------------------------------------------------------------------
@@ -290,7 +290,7 @@ class PoissonSolver(object):
 
         gtimer = Timer()
         if verbose:
-            print '\nSolving Poisson Eq.'
+            print( '\nSolving Poisson Eq.')
 
         # ----------------------------------------------------------------------
         # regular grid
@@ -298,7 +298,7 @@ class PoissonSolver(object):
 
             #if (self.gdims - fshape).any():
             if self.gdims != fshape:
-                print self.gdims, fshape
+                print( self.gdims, fshape)
                 raise ValueError("Shape of function should match shape of grid")
 
             # convolution in frequency domain
@@ -330,7 +330,7 @@ class PoissonSolver(object):
 
         # ----------------------------------------------------------------------
         if verbose:
-            print 'Poisson solver finished',
+            print( 'Poisson solver finished')
             gtimer.end()
 
         return p

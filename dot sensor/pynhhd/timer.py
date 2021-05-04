@@ -30,21 +30,21 @@ class Timer(object):
 
         tseconds = self.etime - self.stime
 
-        print ' [[ elapsed time:',
+        print(' [[ elapsed time:', end = "")
         if tseconds < numpy.power(10.,-6.):
-            print("%.3f micro-sec." % (tseconds*numpy.power(10,6))),
+            print("%.3f micro-sec." % (tseconds*numpy.power(10,6)),end = "")
 
         elif tseconds < numpy.power(10.,-3.):
-            print("%.3f milli-sec." % (tseconds*numpy.power(10.,3.))),
+            print("%.3f milli-sec." % (tseconds*numpy.power(10.,3.)),end = "")
 
         elif tseconds < 60.0:
-            print("%.3f sec." % (tseconds)),
+            print("%.3f sec." % (tseconds),end = "")
 
         else:
             m = int(tseconds/ 60.0)
-            print("%d min. %.3f sec." % (m, (tseconds - 60*m))),
+            print("%d min. %.3f sec." % (m, (tseconds - 60*m)),end = "")
 
-        print ']]'
+        print(']]')
 
     def start(self):
         self.stime = timeit.default_timer()

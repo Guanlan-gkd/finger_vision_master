@@ -1,8 +1,9 @@
+from __future__ import division, unicode_literals, print_function  # for compatibility with Python 2 and 3
 from nHHD import *
 import numpy as np 
 import cv2
 import matplotlib.pyplot as plt
-# from __future__ import division, unicode_literals, print_function  # for compatibility with Python 2 and 3
+
 
 # from undistort_crop_resize import *
 
@@ -15,7 +16,7 @@ from skimage import morphology, util, filters
 from scipy.interpolate import griddata
 import skimage
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(2)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 800)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 600)
 

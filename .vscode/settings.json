@@ -2,6 +2,6 @@
     "python.autoComplete.extraPaths": [
         "/opt/ros/melodic/lib/python2.7/dist-packages"
     ],
-    "python.pythonPath": "/usr/bin/python",
+    "python.pythonPath": "/home/zgl/miniconda3/envs/py38/bin/python",
     "python.linting.enabled": false
 }
