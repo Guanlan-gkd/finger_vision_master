@@ -15,7 +15,7 @@ from skimage import morphology, util, filters
 from scipy.interpolate import griddata
 import skimage
 
-cap = cv2.VideoCapture(2)
+cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 800)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 600)
 
@@ -192,7 +192,7 @@ while (True):
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
-
+print(decompose_obj.Stor)
 # When everything done, release the capture
 cap.release()
 cv2.destroyAllWindows()

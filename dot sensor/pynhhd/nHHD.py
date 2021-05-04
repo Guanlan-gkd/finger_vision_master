@@ -31,7 +31,7 @@ class nHHD(object):
 
     # constructor
     def __init__(self, **kwargs):
-
+    
         args = kwargs.keys()
 
         if ('grid' in args) == ('points' in args):
@@ -58,7 +58,7 @@ class nHHD(object):
         if (self.dim != 2) and (self.dim != 3):
             raise ValueError("nHHD Solver works only for 2 and 3 dimensions")
 
-        self.psolver.prepare(True)     
+        self.psolver.prepare(True)   
     
     # create the 3-component decomposition
     def decompose(self, vfield, verbose=0):
@@ -150,7 +150,7 @@ class nHHD(object):
     def get_force(self, vfield, verbose): 
         
         mgrid = numpy.mgrid[0: vfield.shape[0], 0: vfield.shape[1]]
-        grid = np.stack((mgrid[0], mgrid[1]), axis =2))
+        grid = numpy.stack((mgrid[0], mgrid[1]), axis =2)
         print(grid.shape)
         
         
@@ -170,7 +170,7 @@ class nHHD(object):
         r_p = grid - nR_max_loc 
         r_n = grid - nR_min_loc
         
-        self.Stor = numpy.sum(numpy.multiply(r_p, self.r)) + numpy.sum(numpy.multiply(r_n, self.r))
+        self.Stor = numpy.sum(numpy.cross(r_p, self.r)) + numpy.sum(numpy.cross(r_n, self.r))
         print("Stor is:", self.Stor)
 
         
