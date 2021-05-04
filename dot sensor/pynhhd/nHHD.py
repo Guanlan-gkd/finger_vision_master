@@ -150,8 +150,8 @@ class nHHD(object):
     def get_force(self, vfield, verbose): 
         
         mgrid = numpy.mgrid[0: vfield.shape[0], 0: vfield.shape[1]]
-        grid = numpy.zeros()
-        
+        grid = np.stack((mgrid[0], mgrid[1]), axis =2))
+        print(grid.shape)
         
         
         self.decompose(vfield, verbose)
@@ -165,13 +165,13 @@ class nHHD(object):
         nR_max_loc = numpy.unravel_index(numpy.argmax(self.nRu, axis = None), self.nRu.shape)
         nR_min_loc = numpy.unravel_index(numpy.argmin(self.nRu, axis = None), self.nRu.shape)
         
-        print(nR_max_loc)
+        # print(nR_max_loc)
         
-        r_p = self.mgrid - nR_max_loc 
-        r_n = self.mgrid - nR_min_loc
+        r_p = grid - nR_max_loc 
+        r_n = grid - nR_min_loc
         
-        # self.Stor = numpy.sum(numpy.multiply(r_p, self.r)) + numpy.sum(numpy.multiply(r_n, self.r))
-        # print("Stor is:", self.Stor)
+        self.Stor = numpy.sum(numpy.multiply(r_p, self.r)) + numpy.sum(numpy.multiply(r_n, self.r))
+        print("Stor is:", self.Stor)
 
         
 # ---------------------------------------------------------------------------
