@@ -45,8 +45,10 @@ To collect contact motion dataset, you can run Fv_utils.py directly and run:
 
 ## nHHD with dot marker sensor
 
-The new dot marker sensor uses USB camera and there is no need of ROS and Raspberry Pi
-The set up the enviroment:
+The new dot marker sensor uses USB camera and there is no need of ROS and Raspberry Pi.
+
+T0 set up the enviroment
+
 Create a python 3.8 enviroment(suggest using anaconda):
 ```sh
 conda create -n <name> python=3.8
