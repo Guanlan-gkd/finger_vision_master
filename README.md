@@ -42,4 +42,31 @@ To collect contact motion dataset, you can run Fv_utils.py directly and run:
   it may pop out that directory doesn't exist, you can create an folder named contact_condition_dataset and with inside     folders 0, 1, 2, 3.
   This dataset contains datapoints of 30 frames of 2X30X30 displacement vectors that represent dx and dy displacement of finger contact area. This dataset would be for now used to train and test a slip prediction framework.
   
-TO BE CONTINUE...
+
+## nHHD with dot marker sensor
+
+The new dot marker sensor uses USB camera and there is no need of ROS and Raspberry Pi
+The set up the enviroment:
+Create a python 3.8 enviroment(suggest using anaconda):
+'''sh
+conda create -n <name> python=3.8
+'''
+Upgrad pip:
+'''sh
+pip intall -U pip
+'''
+Install packages:
+'''sh
+pip install numpy scipy
+pip install -U scikit-learn scikit-image
+pip install opencv-python opencv-contrib-python
+pip install matplotlib
+'''
+run code to do nHHD:
+'''sh
+  python dot_nHHD.py
+'''
+
+
+
+
