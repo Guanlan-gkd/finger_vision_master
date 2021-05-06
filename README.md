@@ -64,7 +64,7 @@ pip install matplotlib
 ```
 run code to do nHHD:
 ```sh
-  python dot_nHHD.py
+python dot_nHHD.py
 ```
 
 
