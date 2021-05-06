@@ -1,7 +1,0 @@
-{
-    "python.autoComplete.extraPaths": [
-        "/opt/ros/melodic/lib/python2.7/dist-packages"
-    ],
-    "python.linting.enabled": false,
-    "python.pythonPath": "/home/zgl/venv_gl3/bin/python3"
-}
