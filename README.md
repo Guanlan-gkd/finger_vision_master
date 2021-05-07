@@ -19,4 +19,9 @@ pip install matplotlib
 ```
 run code to do nHHD:
 ```sh
-python dot_nHHD.py
+python ./dot sensor/pynhhd/dot_nHHD.py
+```
+
+The code returns 3 force-like values, *Sn* is contact normal force, *St* is tangential force and *Stor* is tourque along surfcace normal 
+
+For details please refer to https://ieeexplore.ieee.org/document/8770057
