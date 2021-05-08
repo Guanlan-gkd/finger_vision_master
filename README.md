@@ -45,9 +45,8 @@ To collect contact motion dataset, you can run Fv_utils.py directly and run:
 
 ## nHHD with dot marker sensor
 
-refer to nhhd branch
-```
-
+refer to nhhd branch at
+https://github.com/Guanlan-gkd/finger_vision_master/tree/nhhd
 
 
 
