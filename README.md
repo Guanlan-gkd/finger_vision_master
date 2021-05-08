@@ -1,6 +1,6 @@
 The new dot marker sensor uses USB camera and there is no need of ROS and Raspberry Pi.
 
-T0 set up the enviroment
+To set up the enviroment
 
 Create a python 3.8 enviroment(suggest using anaconda):
 ```sh
